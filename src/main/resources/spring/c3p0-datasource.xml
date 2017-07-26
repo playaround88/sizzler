@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+			http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+			http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+			">
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+		<!-- 连接设置 -->
+		<property name="driverClass" value="${db_driver}" />
+		<property name="jdbcUrl" value="${db_url}" />
+		<property name="user" value="${db_user}" />
+		<property name="password" value="${db_password}" />
+		<!-- 数据池设置 -->
+		<property name="initialPoolSize" value="${c3p0_initialPoolSize}" />
+		<property name="maxPoolSize" value="${c3p0_maxPoolSize}" />
+		<property name="minPoolSize" value="${c3p0_minPoolSize}" />
+		<property name="maxIdleTime" value="${c3p0_maxIdleTime}" />
+		<!--当连接池中的连接耗尽的时候c3p0一次同时获取的连接数。Default: 3 -->
+		<property name="acquireIncrement" value="${c3p0_acquireIncrement}" />
+		<!--每60秒检查所有连接池中的空闲连接。Default: 0 -->
+		<property name="idleConnectionTestPeriod" value="${c3p0_idleConnectionTestPeriod}" />
+		<!--如果设为true那么在取得连接的同时将校验连接的有效性。Default: false -->
+		<property name="testConnectionOnCheckin" value="${c3p0_testConnectionOnCheckin}" />
+		<property name="testConnectionOnCheckout" value="${c3p0_testConnectionOnCheckout}" />
+		<property name="preferredTestQuery" value="${c3p0_preferredTestQuery}" />
+		<property name="checkoutTimeout" value="${c3p0_checkoutTimeout}" />
+	</bean>
+</beans>
