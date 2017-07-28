@@ -3,3 +3,4 @@
 <script type="text/javascript" src="js/lib/jquery.js"></script>
 <script type="text/javascript" src="js/lib/easyui/jquery.easyui.min.js"></script>
 <script type="text/javascript" src="js/lib/easyui/locale/easyui-lang-zh_CN.js"></script>
+<script type="text/javascript" src="js/lib/commons.js"></script>

@@ -348,7 +348,7 @@
   position: absolute;
   top: 50%;
   margin-top: -8px;
-  font-size: 1px;
+/*  font-size: 1px; */
 }
 .l-btn span span .l-btn-empty {
   display: inline-block;

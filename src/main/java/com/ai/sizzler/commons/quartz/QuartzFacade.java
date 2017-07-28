@@ -23,10 +23,10 @@ import com.ai.sizzler.domain.SimpleJobForm;
 
 public class QuartzFacade {
 	private static final Logger LOG = LoggerFactory.getLogger(QuartzFacade.class);
-	private QuartzFacade instance = new QuartzFacade();
+	private static QuartzFacade instance = new QuartzFacade();
 	private Scheduler scheduler;
-
-	private QuartzFacade() {
+	
+	public void init(){
 		try {
 			scheduler = StdSchedulerFactory.getDefaultScheduler();
 			scheduler.start();
@@ -36,31 +36,33 @@ public class QuartzFacade {
 		}
 	}
 
-	public QuartzFacade getInstance() {
-		return this.instance;
+	public static QuartzFacade getInstance() {
+		return instance;
 	}
 
-	@Override
-	protected void finalize() throws Throwable {
-		super.finalize();
-		// 关闭
-		scheduler.shutdown();
+	public void shutdown(){
+		try {
+			if(scheduler!=null){
+				scheduler.shutdown();
+			}
+		} catch (SchedulerException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void scheduleSimpleJob(SimpleJobForm form) throws SchedulerException {
 		JobDetail job = newJob(HttpNotifyJob.class)
-				.withIdentity(form.getJobId(), form.getGroup())
-				.withDescription("")
-				.usingJobData("url", "") //notify url
+				.withIdentity(form.getJobName(), form.getGroup())
+				.withDescription(form.getDescription())
+				.usingJobData("url", form.getNotify()) //notify url
 				.build();
 
 		SimpleScheduleBuilder schedulerBuilder = simpleSchedule()
-				.withIntervalInSeconds(form.getIntervalInSeconds());
-		if (form.isRepeat()) {
-			schedulerBuilder.repeatForever();
-		}
+				.withIntervalInSeconds(form.getIntervalInSeconds())
+				.repeatForever();
 		Trigger trigger = newTrigger()
-				.withIdentity(form.getJobId(), form.getGroup())
+				.withIdentity(form.getJobName(), form.getGroup())
+				.withDescription(form.getDescription())
 				.startNow()
 				.withSchedule(schedulerBuilder)
 				.build();
@@ -70,14 +72,16 @@ public class QuartzFacade {
 	
 	public void scheduleCronJob(CronJobForm form) throws SchedulerException{
 		JobDetail job = newJob(HttpNotifyJob.class)
-				.withIdentity(form.getJobId(), form.getGroup())
-				.usingJobData("url", "") //notify url
+				.withIdentity(form.getJobName(), form.getGroup())
+				.withDescription(form.getDescription())
+				.usingJobData("url", form.getNotify()) //notify url
 				.build();
 
 		CronTrigger trigger = newTrigger()
-			    .withIdentity(form.getJobId(), form.getGroup())
+			    .withIdentity(form.getJobName(), form.getGroup())
+			    .withDescription(form.getDescription())
 			    .withSchedule(cronSchedule(form.getCronExpression()))
-			    .forJob(form.getJobId(), form.getGroup())
+			    .forJob(form.getJobName(), form.getGroup())
 			    .build();
 		
 		scheduler.scheduleJob(job, trigger);
@@ -85,6 +89,10 @@ public class QuartzFacade {
 	
 	public boolean unscheduleJob(TriggerKey triggerKey) throws SchedulerException{
 		return scheduler.unscheduleJob(triggerKey);
+	}
+	
+	public void triggerJob(JobKey jobKey) throws SchedulerException{
+		scheduler.triggerJob(jobKey);
 	}
 	
 	public void pauseJob(JobKey jobKey) throws SchedulerException{

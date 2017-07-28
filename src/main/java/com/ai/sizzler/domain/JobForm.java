@@ -4,16 +4,16 @@ import java.io.Serializable;
 
 public class JobForm implements Serializable{
 	private static final long serialVersionUID = -7594864144801684198L;
-	private String jobId;
+	private String jobName;
 	private String group;
 	private String description;
 	private String notify;
 	
-	public String getJobId() {
-		return jobId;
+	public String getJobName() {
+		return jobName;
 	}
-	public void setJobId(String jobId) {
-		this.jobId = jobId;
+	public void setJobName(String jobName) {
+		this.jobName = jobName;
 	}
 	public String getGroup() {
 		return group;

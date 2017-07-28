@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.sizzler.qrtz">
+	<sql id="colums">
+	SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP,JOB_NAME,JOB_GROUP,DESCRIPTION,NEXT_FIRE_TIME,PREV_FIRE_TIME,
+	PRIORITY,TRIGGER_STATE,TRIGGER_TYPE,START_TIME,END_TIME,CALENDAR_NAME,MISFIRE_INSTR,JOB_DATA
+	</sql>
+	<select id="selectTrigger" parameterType="hashMap" resultType="hashMap">
+		select <include refid="colums" />
+		from qrtz_triggers
+		where 1=1
+		<if test="jobName!=null">
+			and JOB_NAME=#{jobName, jdbcType=VARCHAR}
+		</if>
+		<if test="jobGroup!=null">
+			and JOB_GROUP=#{jobGroup, jdbcType=VARCHAR}
+		</if>
+	</select>
+</mapper>

@@ -8,7 +8,7 @@
 	<welcome-file-list>
 		<welcome-file>index.jsp</welcome-file>
 	</welcome-file-list>
-
+	
 	<!-- 启动spring容器 -->
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
@@ -20,6 +20,10 @@
 	<!-- sql migrate -->
 	<listener>
 		<listener-class>com.ai.sizzler.commons.SqlMigrateListener</listener-class>
+	</listener>
+	<!-- quartz -->
+	<listener>
+		<listener-class>com.ai.sizzler.commons.QuartzFactoryListener</listener-class>
 	</listener>
 	<!-- 编码过滤器 -->
 	<filter>

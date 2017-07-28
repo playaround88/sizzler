@@ -42,6 +42,7 @@ public class HttpNotifyJob implements Job{
 			
 			//TODO 持久化执行日志
 			log.put("statusCode", statusCode+"");
+			System.out.println(gson.toJson(log));
 			LOG.info(gson.toJson(log));
 			
 		} catch (ClientProtocolException e) {
