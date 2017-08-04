@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.sizzler.scan.importer">
+	<sql id="colums">
+		ID, IMP_NAME, DESCRIPTION, PROPS, DS_ID, CTIME
+	</sql>
+	<resultMap type="hashMap" id="impRM">
+		<result column="ID" property="id" javaType="long" />
+		<result column="IMP_NAME" property="impName" javaType="string" />
+		<result column="DESCRIPTION" property="description" javaType="string" />
+		<result column="PROPS" property="props" javaType="string" />
+		<result column="DS_ID" property="dsId" javaType="long" />
+		<result column="CTIME" property="ctime" javaType="java.sql.Date" />
+		<association property="dataSource" column="DS_ID"
+			fetchType="eager" select="com.ai.sizzler.scan.ds.selectById">
+		</association>
+	</resultMap>
+	<insert id="insert" parameterType="com.ai.sizzler.domain.ImporterForm">
+		<selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into scan_importer (IMP_NAME, DESCRIPTION, PROPS,
+		DS_ID, CTIME)
+		values (#{impName,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR},
+		#{props,jdbcType=VARCHAR},
+		#{dsId,jdbcType=BIGINT}, now())
+	</insert>
+	<delete id="deleteById" parameterType="java.lang.Long">
+		delete from scan_importer
+		where ID = #{id,jdbcType=BIGINT}
+	</delete>
+	<update id="update" parameterType="com.ai.sizzler.domain.ImporterForm">
+		update scan_importer
+		<set>
+			<if test="impName != null">
+				IMP_NAME = #{impName,jdbcType=VARCHAR},
+			</if>
+			<if test="description != null">
+				DESCRIPTION = #{description,jdbcType=VARCHAR},
+			</if>
+			<if test="props != null">
+				PROPS = #{props,jdbcType=VARCHAR},
+			</if>
+			<if test="dsId != null">
+				DS_ID = #{dsId,jdbcType=BIGINT},
+			</if>
+		</set>
+		where ID = #{id,jdbcType=BIGINT}
+	</update>
+	<select id="selectById" parameterType="long" resultMap="impRM">
+		select
+		<include refid="colums" />
+		from scan_importer
+		where ID=#{id, jdbcType=BIGINT}
+	</select>
+	<select id="selectList" parameterType="hashMap" resultType="hashMap">
+		select
+		<include refid="colums" />
+		from scan_importer
+		where 1=1
+		<if test="impName!=null">
+			and IMP_NAME=#{impName, jdbcType=VARCHAR}
+		</if>
+	</select>
+
+</mapper>

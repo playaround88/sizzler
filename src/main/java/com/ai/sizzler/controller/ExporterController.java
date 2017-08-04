@@ -13,25 +13,25 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ai.commons.pager.PagedList;
 import com.ai.commons.pager.PagerUtils;
-import com.ai.sizzler.domain.DataSource;
+import com.ai.sizzler.domain.ExporterForm;
+import com.ai.sizzler.service.IExporterService;
 
 @Controller
-@RequestMapping("/scan/ds")
+@RequestMapping("/scan/exporter")
 public class ExporterController {
 	private static Logger LOG=LoggerFactory.getLogger(ExporterController.class);
-	
+	private IExporterService service;
 	@RequestMapping("/save")
 	@ResponseBody
-	public Object save(HttpServletRequest request){
+	public Object save(ExporterForm exp,HttpServletRequest request){
 		Map<String,Object> result=new HashMap<String,Object>();
-		DataSource ds=null;
 		try{
-			if(ds.getId()!=0){
+			if(exp.getId()!=0){
 				//TODO 更新
-				
+				service.update(exp);
 			}else{
 				//TODO 新增
-				
+				service.insert(exp);
 			}
 			result.put("success", true);
 			result.put("message", "保存成功");

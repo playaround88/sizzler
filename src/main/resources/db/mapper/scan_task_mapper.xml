@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.sizzler.scan.task">
+	<sql id="colums">
+		ID, TASK_NAME, TASK_GROUP, TASK_TYPE, DESCRIPTION,
+		FETCH_SIZE, SLEEP_TIME, POOL_SIZE, IMP_ID, EXP_ID, CTIME
+	</sql>
+	<resultMap id="taskRM" type="com.ai.sizzler.scan.Task">
+		<id column="ID" jdbcType="BIGINT" property="id" />
+		<result column="TASK_NAME" jdbcType="VARCHAR" property="name" />
+		<result column="TASK_GROUP" jdbcType="VARCHAR" property="group" />
+		<result column="TASK_TYPE" jdbcType="VARCHAR" property="type" />
+		<result column="DESCRIPTION" jdbcType="VARCHAR" property="description" />
+		<result column="FETCH_SIZE" jdbcType="INTEGER" property="fetchSize" />
+		<result column="SLEEP_TIME" jdbcType="INTEGER" property="sleepTime" />
+		<result column="POOL_SIZE" jdbcType="INTEGER" property="poolSize" />
+		<result column="IMP_ID" jdbcType="BIGINT" property="impId" />
+		<result column="EXP_ID" jdbcType="BIGINT" property="expId" />
+		<result column="CTIME" jdbcType="TIMESTAMP" property="ctime" />
+		<association property="impMap" column="IMP_ID" fetchType="eager"
+			select="com.ai.sizzler.scan.importer.selectById">
+		</association>
+		<association property="expMap" column="EXP_ID" fetchType="eager"
+			select="com.ai.sizzler.scan.exporter.selectById">
+		</association>
+	</resultMap>
+
+	<insert id="insert" parameterType="com.ai.sizzler.scan.Task">
+		<selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+			SELECT	LAST_INSERT_ID()
+		</selectKey>
+		insert into scan_task (TASK_NAME, TASK_GROUP, TASK_TYPE,
+		DESCRIPTION, FETCH_SIZE, SLEEP_TIME, POOL_SIZE, IMP_ID, EXP_ID, CTIME)
+		values
+		(#{name,jdbcType=VARCHAR}, #{group,jdbcType=VARCHAR},
+		#{type,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR},
+		#{fetchSize,jdbcType=INTEGER}, #{sleepTime,jdbcType=INTEGER},
+		#{poolSize,jdbcType=INTEGER}, #{impId,jdbcType=BIGINT},
+		#{expId,jdbcType=BIGINT}, now())
+	</insert>
+
+	<delete id="deleteById" parameterType="java.lang.Long">
+		delete from scan_task
+		where ID = #{id,jdbcType=BIGINT}
+	</delete>
+
+	<update id="update" parameterType="com.ai.sizzler.scan.Task">
+		update scan_task
+		<set>
+			<if test="name != null">
+				TASK_NAME = #{taskName,jdbcType=VARCHAR},
+			</if>
+			<if test="group != null">
+				TASK_GROUP = #{taskGroup,jdbcType=VARCHAR},
+			</if>
+			<if test="type != null">
+				TASK_TYPE = #{taskType,jdbcType=VARCHAR},
+			</if>
+			<if test="description != null">
+				DESCRIPTION = #{description,jdbcType=VARCHAR},
+			</if>
+			<if test="fetchSize != null">
+				FETCH_SIZE = #{fetchSize,jdbcType=INTEGER},
+			</if>
+			<if test="sleepTime != null">
+				SLEEP_TIME = #{sleepTime,jdbcType=INTEGER},
+			</if>
+			<if test="poolSize != null">
+				POOL_SIZE = #{poolSize,jdbcType=INTEGER},
+			</if>
+			<if test="impId != null">
+				IMP_ID = #{impId,jdbcType=BIGINT},
+			</if>
+			<if test="expId != null">
+				EXP_ID = #{expId,jdbcType=BIGINT},
+			</if>
+		</set>
+		where ID = #{id,jdbcType=BIGINT}
+	</update>
+	<select id="selectList" parameterType="hashMap" resultType="hashMap">
+		select
+		<include refid="colums" />
+		from scan_task
+		where 1=1
+		<if test="name!=null">
+			and TASK_NAME=#{name, jdbcType=VARCHAR}
+		</if>
+		<if test="group!=null">
+			and TASK_GROUP=#{group, jdbcType=VARCHAR}
+		</if>
+		<if test="type!=null">
+			and TASK_TYPE=#{type, jdbcType=VARCHAR}
+		</if>
+	</select>
+	<select id="selectById" parameterType="long" resultMap="taskRM">
+		select
+		<include refid="colums" />
+		from scan_task
+		where ID=#{id, jdbcType=BIGINT}
+	</select>
+
+</mapper>

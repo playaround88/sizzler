@@ -22,7 +22,7 @@ public class Task {
 	//dynmic:自增长线程任务
 	private String type;
 	//描述
-	private String desc;
+	private String description;
 	//每次取数据，获取的数量
 	private int fetchSize;
 	//当监听器判断当前没有要处理的数据时，休眠的时间，单位为秒
@@ -38,6 +38,7 @@ public class Task {
 	
 	private Map impMap;
 	private Map expMap;
+	//
 	private Importer importer;
 	private Exporter exporter;
 	private Listener listener;
@@ -107,12 +108,15 @@ public class Task {
 	public void setType(String type) {
 		this.type = type;
 	}
-	public String getDesc() {
-		return desc;
+
+	public String getDescription() {
+		return description;
 	}
-	public void setDesc(String desc) {
-		this.desc = desc;
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
+
 	public int getFetchSize() {
 		return fetchSize;
 	}

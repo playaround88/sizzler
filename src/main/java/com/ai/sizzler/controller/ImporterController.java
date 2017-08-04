@@ -13,27 +13,27 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ai.commons.pager.PagedList;
 import com.ai.commons.pager.PagerUtils;
+import com.ai.sizzler.domain.ImporterForm;
+import com.ai.sizzler.service.IImporterService;
 
 @Controller
 @RequestMapping("/scan/importer")
 public class ImporterController {
 	private static Logger LOG=LoggerFactory.getLogger(ImporterController.class);
+	private IImporterService service;
 	
 	@RequestMapping("/save")
 	@ResponseBody
-	public Object save(HttpServletRequest request){
+	public Object save(ImporterForm imp,HttpServletRequest request){
 		Map<String,Object> result=new HashMap<String,Object>();
-//		IImporter ds=null;
 		try{
-			/*
-			if(ds.getId()!=0){
-				//TODO 更新
-				
+			if(imp.getId()!=0){
+				// 更新
+				service.update(imp);
 			}else{
-				//TODO 新增
-				
+				// 新增
+				service.insert(imp);
 			}
-			*/
 			result.put("success", true);
 			result.put("message", "保存成功");
 		}catch (Exception e) {
@@ -48,10 +48,10 @@ public class ImporterController {
 	@ResponseBody
 	public Object del(HttpServletRequest request){
 		Map<String,Object> result=new HashMap<String,Object>();
-		String dsId=request.getParameter("id");
+		String id=request.getParameter("id");
 		try{
-			//TODO 删除数据源
-			
+			// 删除数据源
+			service.del(Long.parseLong(id));
 			result.put("success", true);
 			result.put("message", "删除成功");
 		}catch (Exception e) {
@@ -65,10 +65,10 @@ public class ImporterController {
 	@RequestMapping("/list")
 	@ResponseBody
 	public Object list(HttpServletRequest request){
-		Map params=new HashMap();
+		HashMap params=new HashMap();
 		PagerUtils.buildPageParamEasyui(request, params);
-		//TODO 查询列表
-		PagedList<Map> pList=null; //qrtzService.queryTaskList(params);
+		// 查询列表
+		PagedList<Map> pList=service.selectPagedList(params);
 		return PagerUtils.buildResultBs(pList);
 	}
 }

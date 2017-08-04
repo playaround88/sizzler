@@ -31,12 +31,11 @@
 		        </div>
 		        <div title="数据扫描管理" style="overflow:auto;">
 		        	<ul>
-		        		<li><a data-options="scan/datasource" title="数据源管理">数据源管理</a></li>
-		        		<li><a data-options="scan/importer" title="导入管理">导入管理</a></li>
-		        		<li><a data-options="scan/exporter" title="导出管理">导出管理</a></li>
-		        		<li><a data-options="scan/group" title="分组管理">分组管理</a></li>
-						<li><a data-options="scan/task" title="扫描任务管理">扫描任务管理</a></li>
-					    <li><a data-options="scan/task/log" title="执行日志">执行日志</a></li>
+		        		<li><a data-options="jsp/scan/ds.jsp" title="数据源管理">数据源管理</a></li>
+		        		<li><a data-options="jsp/scan/importer.jsp" title="导入管理">导入管理</a></li>
+		        		<li><a data-options="jsp/scan/exporter.jsp" title="导出管理">导出管理</a></li>
+						<li><a data-options="jsp/scan/task.jsp" title="扫描任务管理">扫描任务管理</a></li>
+					    <li><a data-options="jsp/scan/taskLog.jsp" title="执行日志">执行日志</a></li>
 					</ul>
 		        </div>
 		        <div title="帮助" data-options="iconCls:'icon-help'" style="padding:10px;">

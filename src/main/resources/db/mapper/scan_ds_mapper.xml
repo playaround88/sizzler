@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.sizzler.scan.ds">
+	<sql id="colums">
+		ID,DS_NAME,DS_TYPE,DESCRIPTION,PROPS,CTIME
+	</sql>
+	<insert id="insert" parameterType="com.ai.sizzler.domain.DataSourceForm">
+		<selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+			SELECT
+			LAST_INSERT_ID()
+		</selectKey>
+		insert into scan_ds (DS_NAME, DS_TYPE, DESCRIPTION, PROPS, CTIME)
+		values (#{dsName,jdbcType=VARCHAR}, #{dsType,jdbcType=VARCHAR},
+		#{description,jdbcType=VARCHAR},#{props,jdbcType=VARCHAR},now())
+	</insert>
+	<delete id="deleteById" parameterType="java.lang.Long">
+		delete from scan_ds
+		where ID = #{id,jdbcType=BIGINT}
+	</delete>
+	<update id="update" parameterType="com.ai.sizzler.domain.DataSourceForm">
+		update scan_ds
+		<set>
+			<if test="dsName != null">
+				DS_NAME = #{dsName,jdbcType=VARCHAR},
+			</if>
+			<if test="dsType != null">
+				DS_TYPE = #{dsType,jdbcType=VARCHAR},
+			</if>
+			<if test="description != null">
+				DESCRIPTION = #{description,jdbcType=VARCHAR},
+			</if>
+			<if test="props != null">
+				PROPS = #{props,jdbcType=VARCHAR},
+			</if>
+			<if test="ctime != null">
+				CTIME = #{ctime,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where ID = #{id,jdbcType=BIGINT}
+	</update>
+	<select id="selectById" parameterType="long" resultType="hashMap">
+		select
+		<include refid="colums" />
+		from scan_ds
+		where ID=#{id, jdbcType=BIGINT}
+	</select>
+	<select id="selectList" parameterType="hashMap" resultType="hashMap">
+		select
+		<include refid="colums" />
+		from scan_ds
+		where 1=1
+		<if test="dsName!=null">
+			and DS_NAME = #{dsName,jdbcType=VARCHAR}
+		</if>
+		<if test="dsType!=null">
+			and DS_TYPE = #{dsType,jdbcType=VARCHAR},
+		</if>
+	</select>
+
+</mapper>

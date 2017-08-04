@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+  PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+  "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+  <classPathEntry location="E:\\maven\\repository\\maven-repository\\mysql\\mysql-connector-java\\5.1.43\\mysql-connector-java-5.1.43.jar" />
+
+  <context id="MysqlTables" targetRuntime="MyBatis3">
+  	<commentGenerator>
+  		<property name="suppressAllComments" value="true"/>
+  	</commentGenerator>
+  	
+    <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+        connectionURL="jdbc:mysql://localhost:3306/sizzler"
+        userId="root"
+        password="root">
+    </jdbcConnection>
+
+    <javaTypeResolver >
+      <property name="forceBigDecimals" value="false" />
+    </javaTypeResolver>
+    
+    <javaModelGenerator targetPackage="com.ai.sizzler.domain" targetProject="src/main/java">
+      <property name="enableSubPackages" value="false" />
+      <property name="trimStrings" value="true" />
+    </javaModelGenerator>
+
+    <sqlMapGenerator targetPackage="db.mapper"  targetProject="src/main/resources">
+      <property name="enableSubPackages" value="false" />
+    </sqlMapGenerator>
+
+    <javaClientGenerator type="XMLMAPPER" targetPackage="com.ai.sizzler.persist"  targetProject="src/main/java">
+      <property name="enableSubPackages" value="true" />
+    </javaClientGenerator>
+	 
+    <table schema="sizzler" tableName="SCAN_DS" domainObjectName="DataSource" >
+      <property name="useActualColumnNames" value="false"/>
+      <generatedKey column="ID" sqlStatement="SELECT LAST_INSERT_ID()" identity="true" />
+    </table>
+    <table schema="sizzler" tableName="SCAN_IMPORTER" domainObjectName="Importer" >
+      <property name="useActualColumnNames" value="false"/>
+      <generatedKey column="ID" sqlStatement="SELECT LAST_INSERT_ID()" identity="true" />
+    </table>
+    <table schema="sizzler" tableName="SCAN_EXPORTER" domainObjectName="Exporter" >
+      <property name="useActualColumnNames" value="false"/>
+      <generatedKey column="ID" sqlStatement="SELECT LAST_INSERT_ID()" identity="true" />
+    </table>
+    <table schema="sizzler" tableName="SCAN_TASK" domainObjectName="Task" >
+      <property name="useActualColumnNames" value="false"/>
+      <generatedKey column="ID" sqlStatement="SELECT LAST_INSERT_ID()" identity="true" />
+    </table>
+  </context>
+</generatorConfiguration>
