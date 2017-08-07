@@ -1,7 +1,10 @@
 package com.ai.sizzler.scan;
 
 import java.sql.Date;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import com.ai.sizzler.scan.component.Exporter;
 import com.ai.sizzler.scan.component.Importer;
@@ -34,7 +37,7 @@ public class Task {
 	//资源导出编码
 	private long expId;
 	//创建时间
-	private Date cTime;
+	private Date ctime;
 	//PAUSED RUNNING
 	private String state;
 	
@@ -47,7 +50,8 @@ public class Task {
 	
 	public void init() throws ScanTaskException{
 		//绑定importer
-		String impType=(String)impMap.get("TYPE");
+		HashMap impDs=(HashMap)impMap.get("dataSource");
+		String impType=(String)impDs.get("DS_TYPE");
 		if("db".equalsIgnoreCase(impType)){
 			this.importer=new DbImporter();
 			
@@ -63,7 +67,8 @@ public class Task {
 		this.importer.init();
 		
 		//绑定exporter
-		String expType=(String)expMap.get("TYPE");
+		HashMap expDs=(HashMap)impMap.get("dataSource");
+		String expType=(String)impDs.get("DS_TYPE");
 		if("db".equalsIgnoreCase(expType)){
 			this.exporter=new DbExporter();
 		}else if("redis".equalsIgnoreCase(expType)){
@@ -76,6 +81,15 @@ public class Task {
 		//初始化
 		this.exporter.load(this.expMap);
 		this.exporter.init();
+		
+		//初始化监听器
+		if("fixed".equals(this.type)){
+			ExecutorService workers=Executors.newFixedThreadPool(this.poolSize);
+			this.listener=new Listener(this, workers);
+		}else{
+			ExecutorService workers=Executors.newCachedThreadPool();
+			this.listener=new Listener(this, workers);
+		}
 	}
 	
 	public void start(){
@@ -149,12 +163,31 @@ public class Task {
 	public void setExpId(long expId) {
 		this.expId = expId;
 	}
-	public Date getcTime() {
-		return cTime;
+	
+	public Date getCtime() {
+		return ctime;
 	}
-	public void setcTime(Date cTime) {
-		this.cTime = cTime;
+
+	public void setCtime(Date ctime) {
+		this.ctime = ctime;
 	}
+
+	public Map getImpMap() {
+		return impMap;
+	}
+
+	public void setImpMap(Map impMap) {
+		this.impMap = impMap;
+	}
+
+	public Map getExpMap() {
+		return expMap;
+	}
+
+	public void setExpMap(Map expMap) {
+		this.expMap = expMap;
+	}
+
 	public Importer getImporter() {
 		return importer;
 	}

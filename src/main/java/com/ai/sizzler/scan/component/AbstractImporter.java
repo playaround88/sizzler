@@ -14,11 +14,11 @@ public abstract class AbstractImporter implements Importer{
 	@Override
 	public void load(Map map) {
 		this.setId((Long)map.get("id"));
-		this.setName((String)map.get("name"));
-		this.setDesc((String)map.get("desc"));		
-		this.setProps((String)map.get("prop"));
+		this.setName((String)map.get("impName"));
+		this.setDesc((String)map.get("description"));		
+		this.setProps((String)map.get("props"));
 		this.setCtime((Date)map.get("ctime"));
-		this.setDsId((Long)map.get("ds_id"));
+		this.setDsId((Long)map.get("dsId"));
 	}
 
 	public long getId() {

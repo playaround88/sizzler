@@ -63,6 +63,13 @@
 				        </select>   
 				    </div>
 				    <div>   
+				        <label for="state">任务初试状态:</label><br />
+				        <select name="state">
+				        	<option value="RUNNING">运行</option>
+				        	<option value="PAUSED">暂停</option>
+				        </select>   
+				    </div>
+				    <div>   
 				        <label for="poolSize">线程池大小:</label><br />
 				        <input class="easyui-validatebox" type="text" name="poolSize" data-options="required:true" />   
 				    </div>

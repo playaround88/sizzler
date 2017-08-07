@@ -8,6 +8,11 @@ public class Listener extends Thread {
 	private WeakReference<Task> task;
 	private ExecutorService workers;
 	private boolean loop = true;
+	
+	public Listener(Task task,ExecutorService workers){
+		this.task=new WeakReference<Task>(task);
+		this.workers=workers;
+	}
 
 	@Override
 	public void run() {

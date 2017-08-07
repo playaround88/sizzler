@@ -47,4 +47,9 @@
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dataSource" />
 	</bean>
+	
+	<!-- scan task factory -->
+	<bean id="taskFactory" class="com.ai.sizzler.scan.TaskFactory" init-method="init" destroy-method="destroy">
+		<property name="service" ref="scanTaskService" />
+	</bean>
 </beans>

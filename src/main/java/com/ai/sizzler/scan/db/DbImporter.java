@@ -10,6 +10,7 @@ import com.ai.sizzler.scan.component.AbstractImporter;
 public class DbImporter extends AbstractImporter{
 	private DbDataSource ds;
 	private String tabName;
+	private String stateField;
 	private String loadState;
 	private String lockState;
 	

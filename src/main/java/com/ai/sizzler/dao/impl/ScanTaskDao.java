@@ -1,6 +1,7 @@
 package com.ai.sizzler.dao.impl;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
@@ -48,6 +49,11 @@ public class ScanTaskDao implements IScanTaskDao{
 		IQueryer<Map> queryer=new MybatisQueryer<Map>(sqlSession, NM+"selectList", params);
 		queryer.query();
 		return queryer.getPageList();
+	}
+
+	@Override
+	public List<Task> selectList(HashMap params) {
+		return sqlSession.selectList(NM+"selectListRM", params);
 	}
 	
 }

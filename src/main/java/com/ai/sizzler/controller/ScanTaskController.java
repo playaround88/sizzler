@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.ai.commons.pager.PagedList;
 import com.ai.commons.pager.PagerUtils;
 import com.ai.sizzler.scan.Task;
+import com.ai.sizzler.scan.TaskFactory;
 import com.ai.sizzler.service.IScanTaskService;
 
 @Controller
@@ -22,10 +23,16 @@ import com.ai.sizzler.service.IScanTaskService;
 public class ScanTaskController {
 	private static Logger LOG=LoggerFactory.getLogger(ScanTaskController.class);
 	private IScanTaskService service;
+	private TaskFactory taskFactory;
 	
 	@Autowired
 	public void setService(IScanTaskService service) {
 		this.service = service;
+	}
+	
+	@Autowired
+	public void setTaskFactory(TaskFactory taskFactory) {
+		this.taskFactory = taskFactory;
 	}
 
 	@RequestMapping("/save")
@@ -33,21 +40,7 @@ public class ScanTaskController {
 	public Object save(Task task,HttpServletRequest request){
 		Map<String,Object> result=new HashMap<String,Object>();
 		try{
-			if(task.getId()!=0){
-				// 更新
-				service.update(task);
-			}else{
-				// 新增
-				service.insert(task);
-			}
-			//重新加载task，会连带加载导入导出
-//			task=service.selectById(task.getId());
-//			
-//			if("RUNNING".equals(task.getState())){
-//				TaskFactory.getInstance().run(task);
-//			}else if("PAUSED".equals(task.getState())){
-//				TaskFactory.getInstance().pause(task.getId());
-//			}
+			taskFactory.add(task);
 			
 			result.put("success", true);
 			result.put("message", "保存成功");
@@ -66,16 +59,37 @@ public class ScanTaskController {
 		String id=request.getParameter("id");
 		try{
 			// 删除数据源
-			service.del(Long.parseLong(id));
-			
-			//TaskFactory.getInstance().remove(Long.parseLong(id));
+			taskFactory.del(Long.parseLong(id));
 			
 			result.put("success", true);
 			result.put("message", "删除成功");
 		}catch (Exception e) {
-			LOG.error("保存数据源异常:",e);
+			LOG.error("删除任务异常:",e);
 			result.put("success", false);
 			result.put("message", "删除任务异常:"+e.getMessage());
+		}
+		return result;
+	}
+	
+	@RequestMapping("/updateState")
+	@ResponseBody
+	public Object updateState(HttpServletRequest request){
+		Map<String,Object> result=new HashMap<String,Object>();
+		String id=request.getParameter("id");
+		String state=request.getParameter("state");
+		try{
+			if("RUNNING".equals(state)){
+				taskFactory.resume(Long.parseLong(id));
+			}else{
+				taskFactory.pause(Long.parseLong(id));
+			}
+			
+			result.put("success", true);
+			result.put("message", "操作成功");
+		}catch (Exception e) {
+			LOG.error("更改任务状态异常:",e);
+			result.put("success", false);
+			result.put("message", "更改任务状态异常:"+e.getMessage());
 		}
 		return result;
 	}

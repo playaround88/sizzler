@@ -1,6 +1,7 @@
 package com.ai.sizzler.scan.component;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.Map;
 
 public abstract class AbstractDataSource implements DataSource{
@@ -13,12 +14,13 @@ public abstract class AbstractDataSource implements DataSource{
 	
 	@Override
 	public void load(Map map) {
-		this.setId((Long)map.get("id"));
-		this.setName((String)map.get("name"));
-		this.setType((String)map.get("type"));
-		this.setDesc((String)map.get("desc"));		
-		this.setProps((String)map.get("prop"));
-		this.setCtime((Date)map.get("ctime"));
+		this.setId((Long)map.get("ID"));
+		this.setName((String)map.get("DS_NAME"));
+		this.setType((String)map.get("DS_TYPE"));
+		this.setDesc((String)map.get("DESCRIPTION"));		
+		this.setProps((String)map.get("PROPS"));
+		Timestamp ts=(Timestamp)map.get("CTIME");
+		this.setCtime(new Date(ts.getTime()));
 	}
 
 	public long getId() {

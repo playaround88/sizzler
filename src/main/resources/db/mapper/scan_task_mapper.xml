@@ -95,7 +95,25 @@
 		<if test="type!=null">
 			and TASK_TYPE=#{type, jdbcType=VARCHAR}
 		</if>
+		<if test="state!=null">
+			and TASK_STATE=#{state, jdbcType=VARCHAR}
+		</if>
+	</select>
+	<select id="selectListRM" parameterType="hashMap" resultMap="taskRM">
+		select
+		<include refid="colums" />
+		from scan_task
+		where 1=1
+		<if test="name!=null">
+			and TASK_NAME=#{name, jdbcType=VARCHAR}
+		</if>
+		<if test="group!=null">
+			and TASK_GROUP=#{group, jdbcType=VARCHAR}
+		</if>
 		<if test="type!=null">
+			and TASK_TYPE=#{type, jdbcType=VARCHAR}
+		</if>
+		<if test="state!=null">
 			and TASK_STATE=#{state, jdbcType=VARCHAR}
 		</if>
 	</select>

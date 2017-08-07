@@ -1,6 +1,7 @@
 package com.ai.sizzler.service.impl;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -46,5 +47,10 @@ public class ScanTaskService implements IScanTaskService{
 	@Override
 	public PagedList<Map> selectPagedList(HashMap params) {
 		return dao.selectPagedList(params);
+	}
+
+	@Override
+	public List<Task> selectList(HashMap params) {
+		return dao.selectList(params);
 	}
 }

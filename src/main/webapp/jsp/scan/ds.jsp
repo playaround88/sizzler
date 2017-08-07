@@ -174,7 +174,7 @@
 		}
 		
 		function save(){
-			$('#dsForm').form('submit',{
+			$('#newForm').form('submit',{
 				url:'scan/ds/save',
 				onSubmit:function(param){
 					//TODO json序列化propFrom
@@ -185,14 +185,14 @@
 					var data = eval('(' + data + ')');
 		            alert(data.message); 
 			        if (data.success){
-			            $('#dsDialog').dialog('close');
-			            $('#dsTab').datagrid('reload');
+			            $('#newDialog').dialog('close');
+			            $('#listTab').datagrid('reload');
 			        }
 				}
 			});
 		}
-		function delDs(){
-			var row=$('#dsTab').datagrid('getSelected');
+		function del(){
+			var row=$('#listTab').datagrid('getSelected');
 			if(!row){
 				alert('未选中行');
 				return;
@@ -202,7 +202,7 @@
 			},function(data){
 				alert(data.message);
 				if(data.success){
-					$('#dsTab').datagrid('reload');
+					$('#listTab').datagrid('reload');
 				}
 			},'json');
 		}
