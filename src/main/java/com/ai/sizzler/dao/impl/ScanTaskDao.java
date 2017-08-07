@@ -1,7 +1,6 @@
 package com.ai.sizzler.dao.impl;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
@@ -11,12 +10,12 @@ import org.springframework.stereotype.Repository;
 import com.ai.commons.pager.IQueryer;
 import com.ai.commons.pager.MybatisQueryer;
 import com.ai.commons.pager.PagedList;
-import com.ai.sizzler.dao.IExporterDao;
-import com.ai.sizzler.domain.ExporterForm;
+import com.ai.sizzler.dao.IScanTaskDao;
+import com.ai.sizzler.scan.Task;
 
-@Repository("exporterDao")
-public class ExporterDao implements IExporterDao{
-	private static final String NM="com.ai.sizzler.scan.exporter.";
+@Repository("scanTaskDao")
+public class ScanTaskDao implements IScanTaskDao{
+	private static final String NM="com.ai.sizzler.scan.task.";
 	private SqlSession sqlSession;
 	
 	@Autowired
@@ -25,8 +24,8 @@ public class ExporterDao implements IExporterDao{
 	}
 
 	@Override
-	public int insert(ExporterForm exp) {
-		return sqlSession.insert(NM+"insert", exp);
+	public int insert(Task task) {
+		return sqlSession.insert(NM+"insert", task);
 	}
 
 	@Override
@@ -35,12 +34,12 @@ public class ExporterDao implements IExporterDao{
 	}
 
 	@Override
-	public int update(ExporterForm exp) {
-		return sqlSession.update(NM+"update", exp);
+	public int update(Task task) {
+		return sqlSession.update(NM+"update", task);
 	}
 
 	@Override
-	public Map selectById(long id) {
+	public Task selectById(long id) {
 		return sqlSession.selectOne(NM+"selectById", id);
 	}
 
@@ -49,11 +48,6 @@ public class ExporterDao implements IExporterDao{
 		IQueryer<Map> queryer=new MybatisQueryer<Map>(sqlSession, NM+"selectList", params);
 		queryer.query();
 		return queryer.getPageList();
-	}
-
-	@Override
-	public List<Map> selectList(HashMap params) {
-		return sqlSession.selectList(NM+"selectList", params);
 	}
 	
 }

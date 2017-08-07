@@ -71,7 +71,7 @@
 	<script type="text/javascript">
 		$(function() {
 			$('#listTab').datagrid({
-				url : 'scan/exporter/list',
+				url : 'scan/exporter/listpage',
 				pagination:true,
 				rownumbers:true,
 				singleSelect:true,
@@ -79,9 +79,9 @@
 				pageSize:20,
 				pageList:[10,20,30,40,50],
 				toolbar: '#tools',
-				idField: 'ID',
+				idField: 'id',
 				columns : [ [{
-					field : 'ID',
+					field : 'id',
 					title : '编码',
 					hidden:true,
 				}, {
@@ -91,22 +91,22 @@
 					field : 'description',
 					title : '描述',
 				}, {
-					field : 'dsId',
+					field : 'a',
 					title : '数据源名称',
-					formatter:function(value,row,index){
-						return row['dataSource']['DS_NAME']
+					formatter: function(value,row,index){
+						return row.dataSource.DS_NAME;
 					}
-				},{
-					field : 'dsId',
+				}, {
+					field : 'b',
 					title : '数据源类型',
-					formatter:function(value,row,index){
-						return row['dataSource']['DS_TYPE']
+					formatter: function(value,row,index){
+						return row.dataSource.DS_TYPE;
 					}
-				},{
-					field : 'dsId',
+				}, {
+					field : 'c',
 					title : '数据源描述',
-					formatter:function(value,row,index){
-						return row['dataSource']['DESCRIPTION']
+					formatter: function(value,row,index){
+						return row.dataSource.DESCRIPTION;
 					}
 				}, {
 					field : 'ctime',
@@ -193,7 +193,7 @@
 				return;
 			}
 			$.post('scan/exporter/del',{
-				id:row['ID']
+				id:row['id']
 			},function(data){
 				alert(data.message);
 				if(data.success){

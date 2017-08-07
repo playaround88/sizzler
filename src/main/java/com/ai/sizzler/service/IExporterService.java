@@ -1,6 +1,7 @@
 package com.ai.sizzler.service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.ai.commons.pager.PagedList;
@@ -35,4 +36,10 @@ public interface IExporterService {
 	 * @return
 	 */
 	PagedList<Map> selectPagedList(HashMap params);
+	/**
+	 * 通过条件查询所有记录列表
+	 * @param params
+	 * @return
+	 */
+	List<Map> selectList(HashMap params);
 }

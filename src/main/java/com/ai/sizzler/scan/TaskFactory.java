@@ -9,8 +9,16 @@ import org.apache.ibatis.session.SqlSession;
 
 public class TaskFactory {
 	private static Map<Long,Task> runingHolder=new HashMap<Long,Task>();
-	
+	private static TaskFactory instance=new TaskFactory();
 	private SqlSession sqlSession;
+	
+	private TaskFactory(){
+		
+	}
+	
+	public static TaskFactory getInstance(){
+		return instance;
+	}
 	
 	public void setSqlSession(SqlSession sqlSession) {
 		this.sqlSession = sqlSession;

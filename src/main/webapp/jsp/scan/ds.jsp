@@ -43,7 +43,7 @@
         				text:'保存',
         				iconCls:'lnr lnr-bug',
         				plain:true,
-        				handler:saveDs,
+        				handler:save,
         			}]">   
 			    <form id="newForm" class="dialog-form" method="post">
 			    	<input type="hidden" name="id" value="0" />

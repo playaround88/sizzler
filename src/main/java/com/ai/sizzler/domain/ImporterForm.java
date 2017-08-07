@@ -3,7 +3,7 @@ package com.ai.sizzler.domain;
 public class ImporterForm {
 	private long id;
 	private String impName;
-	private String desc;
+	private String description;
 	private String props;
 	private long dsId;
 	
@@ -19,11 +19,12 @@ public class ImporterForm {
 	public void setImpName(String impName) {
 		this.impName = impName;
 	}
-	public String getDesc() {
-		return desc;
+	
+	public String getDescription() {
+		return description;
 	}
-	public void setDesc(String desc) {
-		this.desc = desc;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 	public String getProps() {
 		return props;

@@ -35,6 +35,8 @@ public class Task {
 	private long expId;
 	//创建时间
 	private Date cTime;
+	//PAUSED RUNNING
+	private String state;
 	
 	private Map impMap;
 	private Map expMap;
@@ -170,5 +172,13 @@ public class Task {
 	}
 	public void setListener(Listener listener) {
 		this.listener = listener;
+	}
+
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
 	}
 }

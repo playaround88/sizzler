@@ -1,19 +1,18 @@
 package com.ai.sizzler.service;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import com.ai.commons.pager.PagedList;
-import com.ai.sizzler.domain.ImporterForm;
+import com.ai.sizzler.scan.Task;
 
-public interface IImporterService {
+public interface IScanTaskService {
 	/**
 	 * 保存记录
 	 * @param imp
 	 * @return
 	 */
-	int insert(ImporterForm imp);
+	int insert(Task task);
 	/**
 	 * 通过id删除记录
 	 * @param id
@@ -23,23 +22,17 @@ public interface IImporterService {
 	 * 更新记录
 	 * @param imp
 	 */
-	int update(ImporterForm imp);
+	int update(Task task);
 	/**
 	 * 通过id查询单条记录
 	 * @param id
 	 * @return
 	 */
-	Map selectById(long id);
+	Task selectById(long id);
 	/**
 	 * 通过条件查询分页的记录列表
 	 * @param params
 	 * @return
 	 */
 	PagedList<Map> selectPagedList(HashMap params);
-	/**
-	 * 通过条件查询所有记录列表
-	 * @param params
-	 * @return
-	 */
-	List<Map> selectList(HashMap params);
 }

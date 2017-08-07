@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.ai.sizzler.scan.task">
 	<sql id="colums">
-		ID, TASK_NAME, TASK_GROUP, TASK_TYPE, DESCRIPTION,
+		ID, TASK_NAME, TASK_GROUP, TASK_TYPE, TASK_STATE, DESCRIPTION,
 		FETCH_SIZE, SLEEP_TIME, POOL_SIZE, IMP_ID, EXP_ID, CTIME
 	</sql>
 	<resultMap id="taskRM" type="com.ai.sizzler.scan.Task">
@@ -10,6 +10,7 @@
 		<result column="TASK_NAME" jdbcType="VARCHAR" property="name" />
 		<result column="TASK_GROUP" jdbcType="VARCHAR" property="group" />
 		<result column="TASK_TYPE" jdbcType="VARCHAR" property="type" />
+		<result column="TASK_STATE" jdbcType="VARCHAR" property="state" />
 		<result column="DESCRIPTION" jdbcType="VARCHAR" property="description" />
 		<result column="FETCH_SIZE" jdbcType="INTEGER" property="fetchSize" />
 		<result column="SLEEP_TIME" jdbcType="INTEGER" property="sleepTime" />
@@ -29,11 +30,11 @@
 		<selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
 			SELECT	LAST_INSERT_ID()
 		</selectKey>
-		insert into scan_task (TASK_NAME, TASK_GROUP, TASK_TYPE,
+		insert into scan_task (TASK_NAME, TASK_GROUP, TASK_TYPE, TASK_STATE,
 		DESCRIPTION, FETCH_SIZE, SLEEP_TIME, POOL_SIZE, IMP_ID, EXP_ID, CTIME)
 		values
 		(#{name,jdbcType=VARCHAR}, #{group,jdbcType=VARCHAR},
-		#{type,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR},
+		#{type,jdbcType=VARCHAR},#{state,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR},
 		#{fetchSize,jdbcType=INTEGER}, #{sleepTime,jdbcType=INTEGER},
 		#{poolSize,jdbcType=INTEGER}, #{impId,jdbcType=BIGINT},
 		#{expId,jdbcType=BIGINT}, now())
@@ -48,13 +49,16 @@
 		update scan_task
 		<set>
 			<if test="name != null">
-				TASK_NAME = #{taskName,jdbcType=VARCHAR},
+				TASK_NAME = #{name,jdbcType=VARCHAR},
 			</if>
 			<if test="group != null">
-				TASK_GROUP = #{taskGroup,jdbcType=VARCHAR},
+				TASK_GROUP = #{group,jdbcType=VARCHAR},
 			</if>
 			<if test="type != null">
-				TASK_TYPE = #{taskType,jdbcType=VARCHAR},
+				TASK_TYPE = #{type,jdbcType=VARCHAR},
+			</if>
+			<if test="state != null">
+				TASK_TYPE = #{state,jdbcType=VARCHAR},
 			</if>
 			<if test="description != null">
 				DESCRIPTION = #{description,jdbcType=VARCHAR},
@@ -90,6 +94,9 @@
 		</if>
 		<if test="type!=null">
 			and TASK_TYPE=#{type, jdbcType=VARCHAR}
+		</if>
+		<if test="type!=null">
+			and TASK_STATE=#{state, jdbcType=VARCHAR}
 		</if>
 	</select>
 	<select id="selectById" parameterType="long" resultMap="taskRM">

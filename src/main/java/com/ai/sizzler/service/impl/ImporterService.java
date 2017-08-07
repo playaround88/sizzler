@@ -1,17 +1,20 @@
 package com.ai.sizzler.service.impl;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.ai.commons.pager.PagedList;
 import com.ai.sizzler.dao.IImporterDao;
 import com.ai.sizzler.domain.ImporterForm;
 import com.ai.sizzler.service.IImporterService;
 
+@Service("importerService")
 public class ImporterService implements IImporterService{
 	private static Logger LOG=LoggerFactory.getLogger(ImporterService.class);
 	private IImporterDao dao;
@@ -45,4 +48,10 @@ public class ImporterService implements IImporterService{
 	public PagedList<Map> selectPagedList(HashMap params) {
 		return dao.selectPagedList(params);
 	}
+
+	@Override
+	public List<Map> selectList(HashMap params) {
+		return dao.selectList(params);
+	}
+	
 }

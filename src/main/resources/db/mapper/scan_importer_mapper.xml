@@ -11,7 +11,7 @@
 		<result column="PROPS" property="props" javaType="string" />
 		<result column="DS_ID" property="dsId" javaType="long" />
 		<result column="CTIME" property="ctime" javaType="java.sql.Date" />
-		<association property="dataSource" column="DS_ID"
+		<association property="dataSource" column="DS_ID" javaType="hashMap"
 			fetchType="eager" select="com.ai.sizzler.scan.ds.selectById">
 		</association>
 	</resultMap>
@@ -53,7 +53,7 @@
 		from scan_importer
 		where ID=#{id, jdbcType=BIGINT}
 	</select>
-	<select id="selectList" parameterType="hashMap" resultType="hashMap">
+	<select id="selectList" parameterType="hashMap" resultMap="impRM">
 		select
 		<include refid="colums" />
 		from scan_importer

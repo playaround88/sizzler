@@ -3,7 +3,7 @@ package com.ai.sizzler.domain;
 public class ExporterForm {
 	private long id;
 	private String expName;
-	private String desc;
+	private String description;
 	private String props;
 	private long dsId;
 	public long getId() {
@@ -18,11 +18,11 @@ public class ExporterForm {
 	public void setExpName(String expName) {
 		this.expName = expName;
 	}
-	public String getDesc() {
-		return desc;
+	public String getDescription() {
+		return description;
 	}
-	public void setDesc(String desc) {
-		this.desc = desc;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 	public String getProps() {
 		return props;
