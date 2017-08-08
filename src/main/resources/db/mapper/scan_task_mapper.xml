@@ -58,7 +58,7 @@
 				TASK_TYPE = #{type,jdbcType=VARCHAR},
 			</if>
 			<if test="state != null">
-				TASK_TYPE = #{state,jdbcType=VARCHAR},
+				TASK_STATE = #{state,jdbcType=VARCHAR}, 
 			</if>
 			<if test="description != null">
 				DESCRIPTION = #{description,jdbcType=VARCHAR},

@@ -175,7 +175,6 @@
 		function pauseTask(index){
 			$('#taskTab').datagrid('selectRow',index);
 			var row=$('#taskTab').datagrid('getSelected');
-			console.log(row);
 			if(!row){
 				alert('未选中行');
 				return;
@@ -193,7 +192,6 @@
 		function resumeTask(index){
 			$('#taskTab').datagrid('selectRow',index);
 			var row=$('#taskTab').datagrid('getSelected');
-			console.log(row);
 			if(!row){
 				alert('未选中行');
 				return;

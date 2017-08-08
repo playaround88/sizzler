@@ -156,9 +156,9 @@
 					formatter: function(value,row,index){
 						var btns='';
 						if(row['TASK_STATE']=='PAUSED'){
-							btns+='<input type="button" value="恢复" onclick="resume('+index+');" />';
+							btns+='<input type="button" value="恢复" onclick="toggle('+index+');" />';
 						}else if(row['TASK_STATE']=='RUNNING'){
-							btns+='<input type="button" value="暂停" onclick="pause('+index+');" />';
+							btns+='<input type="button" value="暂停" onclick="toggle('+index+');" />';
 						}
 						return btns;
 					}
@@ -209,6 +209,30 @@
 			}
 			$.post('scan/task/del',{
 				id:row['ID']
+			},function(data){
+				alert(data.message);
+				if(data.success){
+					$('#listTab').datagrid('reload');
+				}
+			},'json');
+		}
+		function toggle(index){
+			$('#listTab').datagrid('selectRow',index);
+			var row=$('#listTab').datagrid('getSelected');
+			if(!row){
+				alert('未选中行');
+				return;
+			}
+			//状态切换
+			if(row['TASK_STATE']=='PAUSED'){
+				var newState='RUNNING';
+			}else{
+				var newState='PAUSED';
+			}
+			//同步
+			$.post('scan/task/toggle',{
+				id: row['ID'],
+				state: newState
 			},function(data){
 				alert(data.message);
 				if(data.success){

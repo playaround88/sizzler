@@ -71,7 +71,7 @@ public class ScanTaskController {
 		return result;
 	}
 	
-	@RequestMapping("/updateState")
+	@RequestMapping("/toggle")
 	@ResponseBody
 	public Object updateState(HttpServletRequest request){
 		Map<String,Object> result=new HashMap<String,Object>();

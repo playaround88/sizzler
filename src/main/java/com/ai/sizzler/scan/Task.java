@@ -54,7 +54,6 @@ public class Task {
 		String impType=(String)impDs.get("DS_TYPE");
 		if("db".equalsIgnoreCase(impType)){
 			this.importer=new DbImporter();
-			
 		}else if("redis".equalsIgnoreCase(impType)){
 			this.importer=new RedisImporter();
 		}else if("url".equalsIgnoreCase(impType)){
@@ -67,8 +66,8 @@ public class Task {
 		this.importer.init();
 		
 		//绑定exporter
-		HashMap expDs=(HashMap)impMap.get("dataSource");
-		String expType=(String)impDs.get("DS_TYPE");
+		HashMap expDs=(HashMap)expMap.get("dataSource");
+		String expType=(String)expDs.get("DS_TYPE");
 		if("db".equalsIgnoreCase(expType)){
 			this.exporter=new DbExporter();
 		}else if("redis".equalsIgnoreCase(expType)){

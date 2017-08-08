@@ -4,10 +4,12 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,6 +45,10 @@ public class UrlExporter extends AbstractExporter{
 		LOG.debug("urlExport deal record:"+jsonStr);
 		HttpPost post=new HttpPost(ds.getBaseUrl()+this.dealUri);
 		try {
+			//添加post请求内容
+			HttpEntity reqEntity=new StringEntity(JsonUtil.toJson(record));
+			post.setEntity(reqEntity);
+			
 			HttpResponse response=client.execute(post);
 			
 			int statusCode=response.getStatusLine().getStatusCode();
