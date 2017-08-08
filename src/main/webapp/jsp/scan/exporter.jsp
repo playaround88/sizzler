@@ -56,7 +56,7 @@
 				    	<input id="dsId" class="easyui-combobox" name="dsId" value="">  
 				    </div>  
 				    <div>   
-				        <label for="description">数据源描述:</label><br />
+				        <label for="description">数据导出描述:</label><br />
 				        <textarea name="description" rows="3"></textarea>
 				    </div>
 			    </form>
@@ -157,8 +157,8 @@
 			
 		var urlPropForm='<form id="propForm" class="dialog-form">'
 			+'<div>'
-				+'<label for="loadUri">数据处理uri:</label><br />'
-				+'<input class="easyui-validatebox" type="text" name="loadUri" data-options="required:true" />'
+				+'<label for="dealUri">数据处理uri:</label><br />'
+				+'<input class="easyui-validatebox" type="text" name="dealUri" data-options="required:true" />'
 			+'</div>'
 			+'</form>';
 			

@@ -17,7 +17,7 @@ public class UrlDataSource extends AbstractDataSource{
 	public void load(Map map) {
 		super.load(map);
 		Map prop=JsonUtil.fromJson(getProps(), HashMap.class);
-		setBaseUrl((String)prop.get("BASE_URL"));
+		setBaseUrl((String)prop.get("baseUrl"));
 	}
 
 	public String getBaseUrl() {

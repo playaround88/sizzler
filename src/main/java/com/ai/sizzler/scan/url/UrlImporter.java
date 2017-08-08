@@ -32,8 +32,8 @@ public class UrlImporter extends AbstractImporter{
 		super.load(map);
 		
 		Map prop=JsonUtil.fromJson(getProps(), HashMap.class);
-		setLoadUri((String)prop.get("load_uri"));
-		setLockUri((String)prop.get("lock_uri"));
+		setLoadUri((String)prop.get("loadUri"));
+		setLockUri((String)prop.get("lockUri"));
 		
 		this.ds=new UrlDataSource();
 		this.ds.load((Map)map.get("dataSource"));
@@ -46,7 +46,6 @@ public class UrlImporter extends AbstractImporter{
 
 	@Override
 	public List<Object> scan(int size) {
-		// TODO Auto-generated method stub
 		HttpGet get=new HttpGet(ds.getBaseUrl()+loadUri);
 		try {
 			HttpResponse response=client.execute(get);
@@ -58,13 +57,14 @@ public class UrlImporter extends AbstractImporter{
 			}
 			HttpEntity entity=response.getEntity();
 			String content=EntityUtils.toString(entity);
-			get.releaseConnection();
 			
 			return JsonUtil.fromJson(content, List.class);
 		} catch (ClientProtocolException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
+		}finally {
+			get.releaseConnection();
 		}
 		
 		return null;
@@ -89,9 +89,9 @@ public class UrlImporter extends AbstractImporter{
 			HttpEntity entity=response.getEntity();
 			String content=EntityUtils.toString(entity);
 			post.releaseConnection();
-			Map result=JsonUtil.fromJson(content, Map.class);
+			UpdateResult result=JsonUtil.fromJson(content, UpdateResult.class);
 			
-			return (Integer)result.get("affect");
+			return result.getAffect();
 		} catch (ClientProtocolException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -117,4 +117,15 @@ public class UrlImporter extends AbstractImporter{
 		this.lockUri = lockUri;
 	}
 
+	static class UpdateResult{
+		int affect;
+
+		public int getAffect() {
+			return affect;
+		}
+
+		public void setAffect(int affect) {
+			this.affect = affect;
+		}
+	}
 }

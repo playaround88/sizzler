@@ -91,7 +91,7 @@
 				    	<input id="expId" class="easyui-combobox" name="expId" value="">  
 				    </div>
 				    <div>   
-				        <label for="description">数据源描述:</label><br />
+				        <label for="description">扫描任务描述:</label><br />
 				        <textarea name="description" rows="3"></textarea>
 				    </div>
 			    </form>

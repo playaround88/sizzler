@@ -56,7 +56,7 @@
 				    	<input id="dsId" class="easyui-combobox" name="dsId" value="">  
 				    </div>  
 				    <div>   
-				        <label for="description">数据源描述:</label><br />
+				        <label for="description">数据导入描述:</label><br />
 				        <textarea name="description" rows="3"></textarea>
 				    </div>
 			    </form>
@@ -145,6 +145,10 @@
 			+'<div>'
 				+'<label for="tabName">表名称:</label><br />'
 				+'<input class="easyui-validatebox" type="text" name="tabName" data-options="required:true" />'
+			+'</div>'
+			+'<div>'
+				+'<label for="stateField">状态字段:</label><br />'
+				+'<input class="easyui-validatebox" type="text" name="stateField" data-options="required:true" />'
 			+'</div>'
 			+'<div>'
 				+'<label for="loadState">待加载数据状态:</label><br />'
