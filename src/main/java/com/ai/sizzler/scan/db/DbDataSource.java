@@ -18,7 +18,7 @@ public class DbDataSource extends AbstractDataSource{
 		
 		Map prop=JsonUtil.fromJson(getProps(), HashMap.class);
 		setDriver((String)prop.get("driver"));
-		setDbUrl((String)prop.get("db_url"));
+		setDbUrl((String)prop.get("dbUrl"));
 		setUser((String)prop.get("user"));
 		setPassword((String)prop.get("password"));
 	}

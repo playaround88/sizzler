@@ -40,6 +40,11 @@ public class UrlExporter extends AbstractExporter{
 	}
 
 	@Override
+	public void destroy() {
+		this.client=null;
+	}
+
+	@Override
 	public void deal(Object record) {
 		String jsonStr=JsonUtil.toJson(record);
 		LOG.debug("urlExport deal record:"+jsonStr);

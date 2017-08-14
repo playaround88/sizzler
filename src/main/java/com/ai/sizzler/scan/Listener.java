@@ -21,7 +21,7 @@ public class Listener extends Thread {
 				List<Object> records = task.get().getImporter().scan(task.get().getFetchSize());
 
 				if (records == null || records.size() == 0) {
-					Thread.currentThread().sleep(task.get().getSleepTime() * 1000 * 2);
+					Thread.currentThread().sleep(task.get().getSleepTime() * 1000);
 					continue;
 				}
 
@@ -30,8 +30,8 @@ public class Listener extends Thread {
 					deal(record);
 				}
 
-				// 休眠，等待线程处理，避免线程池压力过大
-				Thread.currentThread().sleep(task.get().getSleepTime() * 1000);
+				// 休眠1秒，等待线程处理，避免线程池压力过大
+				Thread.currentThread().sleep(1000);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

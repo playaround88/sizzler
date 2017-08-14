@@ -18,7 +18,7 @@
   <body>
 	<div class="easyui-layout" style="height:100%;">
         <div id="banner" data-options="region:'north'">
-        	<h1 style="color:white;margin:10px 20px;">It's a sizzler!</h1>
+        	<h1 style="margin-left:10px;">It's a sizzler!</h1>
         </div>
         <!-- 菜单 -->
         <div id="menu" data-options="region:'west',split:true" style="width:200px;">

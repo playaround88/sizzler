@@ -13,6 +13,10 @@ public interface Importer extends Component{
 	 */
 	void init();
 	/**
+	 * 销毁资源链接
+	 */
+	void destroy();
+	/**
 	 * 扫描得到指定数量的数据
 	 * @param size
 	 * @return

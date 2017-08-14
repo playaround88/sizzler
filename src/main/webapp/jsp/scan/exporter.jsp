@@ -129,9 +129,7 @@
 			    onSelect:function(rec){
 			    	var type=rec["DS_TYPE"];
 			    	$('#propForm').remove();
-					if(type=='db'){
-						$('#newDialog').append(dbPropForm);
-					}else if(type=='redis'){
+					if(type=='redis'){
 						$('#newDialog').append(redisPropForm);
 					}else if(type=='url'){
 						$('#newDialog').append(urlPropForm);
@@ -140,13 +138,6 @@
 			    }
 			});
 		});
-		
-		var dbPropForm='<form id="propForm" class="dialog-form">'
-			+'<div>'
-				+'<label for="tabName">表名称:</label><br />'
-				+'<input class="easyui-validatebox" type="text" name="tabName" data-options="required:true" />'
-			+'</div>'
-			+'</form>';
 		
 		var redisPropForm='<form id="propForm" class="dialog-form">'
 			+'<div>'

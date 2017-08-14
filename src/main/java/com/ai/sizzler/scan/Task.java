@@ -96,7 +96,9 @@ public class Task {
 	}
 	
 	public void shutdown(){
-		listener.shutdown();
+		this.listener.shutdown();
+		this.getImporter().destroy();
+		this.getExporter().destroy();
 	}
 	
 	public long getId() {

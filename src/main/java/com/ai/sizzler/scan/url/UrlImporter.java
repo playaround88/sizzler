@@ -45,6 +45,11 @@ public class UrlImporter extends AbstractImporter{
 	}
 
 	@Override
+	public void destroy() {
+		client=null;
+	}
+
+	@Override
 	public List<Object> scan(int size) {
 		HttpGet get=new HttpGet(ds.getBaseUrl()+loadUri);
 		try {

@@ -7,9 +7,13 @@ package com.ai.sizzler.scan.component;
  */
 public interface Exporter extends Component {
 	/**
-	 * 初始化数据连接
+	 * 初始化
 	 */
 	void init();
+	/**
+	 * 销毁资源
+	 */
+	void destroy();
 	/**
 	 * 处理数据，线程内部调用
 	 * @param record

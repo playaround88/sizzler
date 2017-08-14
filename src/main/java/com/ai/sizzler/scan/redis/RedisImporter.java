@@ -38,6 +38,14 @@ public class RedisImporter extends AbstractImporter{
 	}
 
 	@Override
+	public void destroy() {
+		if(jedis!=null){
+			jedis.close();
+			jedis=null;
+		}
+	}
+
+	@Override
 	public List<Object> scan(int size) {
 		if(!jedis.isConnected()){
 			jedis.connect();

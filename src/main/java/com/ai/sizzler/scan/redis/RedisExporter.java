@@ -34,6 +34,11 @@ public class RedisExporter extends AbstractExporter{
 			jedis.auth(ds.getPassword());
 		}
 	}
+	
+	@Override
+	public void destroy() {
+		this.jedis.close();
+	}
 
 	@Override
 	public void deal(Object record) {

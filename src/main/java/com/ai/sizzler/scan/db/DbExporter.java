@@ -14,7 +14,7 @@ public class DbExporter extends AbstractExporter{
 	public void load(Map map) {
 		super.load(map);
 		Map prop=JsonUtil.fromJson(getProps(), HashMap.class);
-		setTabName((String)prop.get("tab_name"));
+		setTabName((String)prop.get("tabName"));
 		
 		this.ds=new DbDataSource();
 		this.ds.load((Map)map.get("dataSource"));
@@ -22,6 +22,12 @@ public class DbExporter extends AbstractExporter{
 	
 	@Override
 	public void init() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void destroy() {
 		// TODO Auto-generated method stub
 		
 	}

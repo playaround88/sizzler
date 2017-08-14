@@ -6,7 +6,9 @@ html, body {
 
 #banner {
 	height: 50px;
-	background: #0081C2 url('../img/bg1.png') no-repeat;
+	line-height:50px;
+	color:white;
+	background-color: #0081C2;
 }
 
 #menu ul {
@@ -27,10 +29,6 @@ html, body {
 	color: white;
 	background: #8CD7E8;
 	cursor: pointer;
-}
-
-#menu ul li a::before {
-	content: url(../img/tip.png);
 }
 
 iframe.plat {
