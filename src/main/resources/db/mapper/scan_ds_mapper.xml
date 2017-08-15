@@ -4,6 +4,14 @@
 	<sql id="colums">
 		ID,DS_NAME,DS_TYPE,DESCRIPTION,PROPS,CTIME
 	</sql>
+	<resultMap id="dsRm" type="hashMap">
+		<result column="ID" property="id" javaType="long" />
+		<result column="DS_NAME" property="dsName" javaType="string" />
+		<result column="DS_TYPE" property="dsType" javaType="string" />
+		<result column="DESCRIPTION" property="description" javaType="string" />
+		<result column="PROPS" property="props" javaType="string" />
+		<result column="CTIME" property="ctime" javaType="java.sql.Date" />
+	</resultMap>
 	<insert id="insert" parameterType="com.ai.sizzler.domain.DataSourceForm">
 		<selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
 			SELECT
@@ -32,19 +40,16 @@
 			<if test="props != null">
 				PROPS = #{props,jdbcType=VARCHAR},
 			</if>
-			<if test="ctime != null">
-				CTIME = #{ctime,jdbcType=TIMESTAMP},
-			</if>
 		</set>
 		where ID = #{id,jdbcType=BIGINT}
 	</update>
-	<select id="selectById" parameterType="long" resultType="hashMap">
+	<select id="selectById" parameterType="long" resultMap="dsRm">
 		select
 		<include refid="colums" />
 		from scan_ds
 		where ID=#{id, jdbcType=BIGINT}
 	</select>
-	<select id="selectList" parameterType="hashMap" resultType="hashMap">
+	<select id="selectList" parameterType="hashMap" resultMap="dsRm">
 		select
 		<include refid="colums" />
 		from scan_ds

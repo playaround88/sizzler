@@ -1,7 +1,7 @@
 package com.ai.sizzler.domain;
 
 public class DataSourceForm {
-	private long id;
+	private long id=0;
 	private String dsName;
 	private String dsType;
 	private String props;

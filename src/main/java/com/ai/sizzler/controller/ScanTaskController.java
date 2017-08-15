@@ -100,7 +100,7 @@ public class ScanTaskController {
 		HashMap params=new HashMap();
 		PagerUtils.buildPageParamEasyui(request, params);
 		// 查询列表
-		PagedList<Map> pList=service.selectPagedList(params);
+		PagedList<Task> pList=service.selectPagedList(params);
 		return PagerUtils.buildResultBs(pList);
 	}
 }

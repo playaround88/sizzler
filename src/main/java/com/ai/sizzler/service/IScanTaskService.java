@@ -35,7 +35,7 @@ public interface IScanTaskService {
 	 * @param params
 	 * @return
 	 */
-	PagedList<Map> selectPagedList(HashMap params);
+	PagedList<Task> selectPagedList(HashMap params);
 	/**
 	 * 通过条件查询所有记录列表
 	 * @param params

@@ -45,7 +45,7 @@ public class ScanTaskService implements IScanTaskService{
 	}
 
 	@Override
-	public PagedList<Map> selectPagedList(HashMap params) {
+	public PagedList<Task> selectPagedList(HashMap params) {
 		return dao.selectPagedList(params);
 	}
 

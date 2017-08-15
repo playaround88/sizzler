@@ -84,22 +84,22 @@
 				pageSize:20,
 				pageList:[10,20,30,40,50],
 				toolbar: '#tools',
-				idField: 'ID',
+				idField: 'id',
 				columns : [ [{
-					field : 'ID',
+					field : 'id',
 					title : '数据源编码',
 					hidden:true,
 				}, {
-					field : 'DS_NAME',
+					field : 'dsName',
 					title : '数据源名称',
 				}, {
-					field : 'DS_TYPE',
+					field : 'dsType',
 					title : '类型',
 				}, {
-					field : 'DESCRIPTION',
+					field : 'description',
 					title : '描述',
 				}, {
-					field : 'CTIME',
+					field : 'ctime',
 					title : '创建时间',
 					formatter: function(value,row,index){
 						if(value==0){
@@ -156,7 +156,9 @@
 		
 		function create(){
 			//
+			clearForm();
 			$('#propForm').remove();
+			
 			//
 			$('#newDialog').dialog('open');
 		}
@@ -177,7 +179,7 @@
 			$('#newForm').form('submit',{
 				url:'scan/ds/save',
 				onSubmit:function(param){
-					//TODO json序列化propFrom
+					// json序列化propFrom
 					var props=JSON.stringify($('#propForm').serializeJson());
 					param["props"]=props;
 				},
@@ -198,13 +200,37 @@
 				return;
 			}
 			$.post('scan/ds/del',{
-				id:row['ID']
+				id:row['id']
 			},function(data){
 				alert(data.message);
 				if(data.success){
 					$('#listTab').datagrid('reload');
 				}
 			},'json');
+		}
+		
+		function update(){
+			var row=$('#listTab').datagrid('getSelected');
+			if(!row){
+				alert('未选中行');
+				return;
+			}
+			fillForm(row);
+			
+			$('#newDialog').dialog('open');
+		}
+		
+		function clearForm(){
+			$('#newForm input').val('');
+			$('#newForm input[name="id"]').val('0');
+			$('#newForm textarea').val('');
+		}
+		
+		function fillForm(row){
+			$('#newForm').fillForm(row);
+			$('#newForm [name="dsType"]').trigger('change')
+			var props=JSON.parse(row['props']);
+			$('#propForm').fillForm(props);
 		}
 	</script>
 </body>

@@ -51,7 +51,7 @@ public class Task {
 	public void init() throws ScanTaskException{
 		//绑定importer
 		HashMap impDs=(HashMap)impMap.get("dataSource");
-		String impType=(String)impDs.get("DS_TYPE");
+		String impType=(String)impDs.get("dsType");
 		if("db".equalsIgnoreCase(impType)){
 			this.importer=new DbImporter();
 		}else if("redis".equalsIgnoreCase(impType)){
@@ -67,7 +67,7 @@ public class Task {
 		
 		//绑定exporter
 		HashMap expDs=(HashMap)expMap.get("dataSource");
-		String expType=(String)expDs.get("DS_TYPE");
+		String expType=(String)expDs.get("dsType");
 		if("db".equalsIgnoreCase(expType)){
 			this.exporter=new DbExporter();
 		}else if("redis".equalsIgnoreCase(expType)){

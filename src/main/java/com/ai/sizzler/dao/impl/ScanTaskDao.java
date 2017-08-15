@@ -45,15 +45,15 @@ public class ScanTaskDao implements IScanTaskDao{
 	}
 
 	@Override
-	public PagedList<Map> selectPagedList(HashMap params) {
-		IQueryer<Map> queryer=new MybatisQueryer<Map>(sqlSession, NM+"selectList", params);
+	public PagedList<Task> selectPagedList(HashMap params) {
+		IQueryer<Task> queryer=new MybatisQueryer<Task>(sqlSession, NM+"selectList", params);
 		queryer.query();
 		return queryer.getPageList();
 	}
 
 	@Override
 	public List<Task> selectList(HashMap params) {
-		return sqlSession.selectList(NM+"selectListRM", params);
+		return sqlSession.selectList(NM+"selectList", params);
 	}
 	
 }

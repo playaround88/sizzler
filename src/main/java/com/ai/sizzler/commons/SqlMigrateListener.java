@@ -26,6 +26,7 @@ public class SqlMigrateListener implements ServletContextListener {
 			LOG.info("执行sql migration...");
 			Flyway flyway = new Flyway();
 			flyway.setDataSource(dbUrl, dbUser, dbPassword);
+			flyway.setBaselineOnMigrate(true);
 			//flyway.baseline();
 			flyway.migrate();
 

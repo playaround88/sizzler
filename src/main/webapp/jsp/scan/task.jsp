@@ -114,34 +114,34 @@
 				pageSize:20,
 				pageList:[10,20,30,40,50],
 				toolbar: '#tools',
-				idField: 'ID',
+				idField: 'id',
 				columns : [ [{
-					field : 'ID',
+					field : 'id',
 					title : '编码',
 					hidden:true,
 				}, {
-					field : 'TASK_NAME',
+					field : 'name',
 					title : '任务名称',
 				}, {
-					field : 'TASK_GROUP',
+					field : 'group',
 					title : '任务分组',
 				}, {
-					field : 'TASK_TYPE',
+					field : 'type',
 					title : '任务类型',
 				}, {
-					field : 'POOL_SIZE',
+					field : 'poolSize',
 					title : '线程池大小',
 				}, {
-					field : 'FETCH_SIZE',
+					field : 'fetchSize',
 					title : '每次加载量',
 				}, {
-					field : 'SLEEP_TIME',
+					field : 'sleepTime',
 					title : '休眠时间',
 				}, {
-					field : 'TASK_STATE',
+					field : 'state',
 					title : '状态',
 				}, {
-					field : 'CTIME',
+					field : 'ctime',
 					title : '创建时间',
 					formatter: function(value,row,index){
 						if(value==0){
@@ -163,7 +163,7 @@
 						return btns;
 					}
 				}, {
-					field : 'DESCRIPTION',
+					field : 'description',
 					title : '描述',
 				}] ]
 			});//表格格式化
@@ -184,6 +184,7 @@
 		
 			
 		function create(){
+			clearForm();
 			$('#newDialog').dialog('open');
 		}
 		function save(){
@@ -208,7 +209,7 @@
 				return;
 			}
 			$.post('scan/task/del',{
-				id:row['ID']
+				id:row['id']
 			},function(data){
 				alert(data.message);
 				if(data.success){
@@ -224,14 +225,14 @@
 				return;
 			}
 			//状态切换
-			if(row['TASK_STATE']=='PAUSED'){
+			if(row['state']=='PAUSED'){
 				var newState='RUNNING';
 			}else{
 				var newState='PAUSED';
 			}
 			//同步
 			$.post('scan/task/toggle',{
-				id: row['ID'],
+				id: row['id'],
 				state: newState
 			},function(data){
 				alert(data.message);
@@ -239,6 +240,29 @@
 					$('#listTab').datagrid('reload');
 				}
 			},'json');
+		}
+		
+		function update(){
+			var row=$('#listTab').datagrid('getSelected');
+			if(!row){
+				alert('未选中行');
+				return;
+			}
+			fillForm(row);
+			
+			$('#newDialog').dialog('open');
+		}
+		
+		function clearForm(){
+			$('#newForm input').val('');
+			$('#newForm input[name="id"]').val('0');
+			$('#newForm textarea').val('');
+		}
+		
+		function fillForm(row){
+			$('#newForm').fillForm(row);
+			$('#impId').combobox('setValue',row["impId"]);
+			$('#expId').combobox('setValue',row["expId"]);
 		}
 	</script>
 </body>

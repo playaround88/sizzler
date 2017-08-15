@@ -94,19 +94,19 @@
 					field : 'a',
 					title : '数据源名称',
 					formatter: function(value,row,index){
-						return row.dataSource.DS_NAME;
+						return row.dataSource.dsName;
 					}
 				},{
 					field : 'b',
 					title : '数据源类型',
 					formatter: function(value,row,index){
-						return row.dataSource.DS_TYPE;
+						return row.dataSource.dsType;
 					}
 				},{
 					field : 'c',
 					title : '数据源描述',
 					formatter: function(value,row,index){
-						return row.dataSource.DESCRIPTION;
+						return row.dataSource.description;
 					}
 				}, {
 					field : 'ctime',
@@ -124,10 +124,10 @@
 			//下拉菜单初始化
 			$('#dsId').combobox({
 				url:'scan/ds/list',
-				valueField:'ID',    
-			    textField:'DS_NAME',
+				valueField:'id',    
+			    textField:'dsName',
 			    onSelect:function(rec){
-			    	var type=rec["DS_TYPE"];
+			    	var type=rec["dsType"];
 			    	$('#propForm').remove();
 					if(type=='db'){
 						$('#newDialog').append(dbPropForm);
@@ -184,6 +184,7 @@
 			
 		function create(){
 			//
+			clearForm();
 			$('#propForm').remove();
 			//
 			$('#newDialog').dialog('open');
@@ -220,6 +221,31 @@
 					$('#listTab').datagrid('reload');
 				}
 			},'json');
+		}
+		
+		function update(){
+			var row=$('#listTab').datagrid('getSelected');
+			if(!row){
+				alert('未选中行');
+				return;
+			}
+			fillForm(row);
+			
+			$('#newDialog').dialog('open');
+		}
+		
+		function clearForm(){
+			$('#newForm input').val('');
+			$('#newForm input[name="id"]').val('0');
+			$('#newForm textarea').val('');
+		}
+		
+		function fillForm(row){
+			$('#newForm').fillForm(row);
+			$('#dsId').combobox('options').onSelect.call($('#dsId').combobox(),row['dataSource']);
+			$('#dsId').combobox('setValue',row["dsId"]);	
+			var props=JSON.parse(row['props']);
+			$('#propForm').fillForm(props);
 		}
 	</script>
 </body>
