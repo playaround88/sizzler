@@ -9,6 +9,7 @@ html, body {
 	line-height:50px;
 	color:white;
 	background-color: #0081C2;
+	overflow:hidden;
 }
 
 #menu ul {
