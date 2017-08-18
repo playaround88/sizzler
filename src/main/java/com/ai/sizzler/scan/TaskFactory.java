@@ -3,7 +3,7 @@ package com.ai.sizzler.scan;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,7 +12,7 @@ import com.ai.sizzler.service.IScanTaskService;
 
 public class TaskFactory {
 	private static Logger LOG=LoggerFactory.getLogger(TaskFactory.class);
-	private static Map<Long,Task> runingHolder=new HashMap<Long,Task>();
+	private static ConcurrentHashMap<Long,Task> runingHolder=new ConcurrentHashMap<Long,Task>();
 	private IScanTaskService service;
 	
 	public void setService(IScanTaskService service) {
