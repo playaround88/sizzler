@@ -81,9 +81,11 @@ public class TaskFactory {
 	 * @param id
 	 */
 	public void del(long id){
-		Task task=runingHolder.get(id);
-		if(task!=null){
-			task.shutdown();
+		synchronized (runingHolder) {
+			Task task=runingHolder.get(id);
+			if(task!=null){
+				task.shutdown();
+			}
 		}
 		// 数据库删除任务记录
 		service.del(id);
@@ -93,14 +95,19 @@ public class TaskFactory {
 	 * @param id
 	 */
 	public void pause(long id){
-		Task task=runingHolder.get(id);
-		if(task!=null){
-			task.shutdown();
-			runingHolder.remove(id);
+		Task task=null;
+		synchronized (runingHolder) {
+			task=runingHolder.get(id);
+			if(task!=null){
+				task.shutdown();
+				runingHolder.remove(id);
+			}
 		}
-		// 数据库修改状态
-		task.setState("PAUSED");
-		service.update(task);
+		if(task!=null){
+			// 数据库修改状态
+			task.setState("PAUSED");
+			service.update(task);
+		}
 	}
 	/**
 	 * 恢复一个扫描任务
@@ -110,11 +117,13 @@ public class TaskFactory {
 	public void resume(long id) throws ScanTaskException{
 		// 数据库查询任务
 		Task task=service.selectById(id);
-		//启动任务
-		startTask(task);
-		// 数据库修改任务状态
-		task.setState("RUNNING");
-		service.update(task);
+		if(task!=null){
+			task.setState("RUNNING");
+			//启动任务
+			startTask(task);
+			// 数据库修改任务状态
+			service.update(task);
+		}
 	}
 	
 }
